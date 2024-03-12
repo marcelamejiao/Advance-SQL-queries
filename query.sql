@@ -30,7 +30,7 @@ AND sal.salesId IS NULL;
 
 -- 3. List all customers & their sales, even if some data is gone
 -- UNION WILL COMBINE ALL THE 3 QUERIES IN ONE TABLE
-SELECT cus.firstName, cus.lastName, cus.email, sls.salesAmount, sls.soldDate
+SELECT cus.firstName, cus.lastName, cus.email, sal.salesAmount, sal.soldDate
 FROM customer cus
 INNER JOIN sales sal
 ON cus.customerId = sal.customerId
