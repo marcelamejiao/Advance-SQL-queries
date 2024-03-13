@@ -51,4 +51,10 @@ WHERE cus.customerId IS NULL;
 
 
 -- 4. How many cars has been sold per employee
+SELECT emp.employeeId, emp.firstName, emp.lastName, count(*) as CarsSoldPerEmployee
+FROM sales as sal
+INNER JOIN employee as emp
+ON sal.employeeId=emp.employeeId
+GROUP BY emp.employeeId, emp.firstName, emp.lastName
+ORDER BY CarsSoldPerEmployee DESC;
 
