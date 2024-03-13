@@ -48,3 +48,7 @@ FROM sales sal
 LEFT JOIN customer cus
 ON cus.customerId = sal.customerId
 WHERE cus.customerId IS NULL;
+
+
+-- 4. How many cars has been sold per employee
+
