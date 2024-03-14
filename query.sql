@@ -71,3 +71,17 @@ INNER JOIN employee as emp
 ON sal.employeeId = emp.employeeId
 WHERE sal.soldDate >= '2023-01-01'
 GROUP BY emp.employeeId, emp.firstName, emp.lastName
+
+
+-- 6. Employees that have made more than 5 sales this year
+SELECT 
+  emp.employeeId, emp.firstName, emp.lastName,
+  count(*) as CarsSoldPerEmployee,
+  MIN(salesAmount) as CheapestCar, 
+  MAX(salesAmount) as MostExpensiveCar
+FROM sales as sal
+INNER JOIN employee as emp
+ON sal.employeeId = emp.employeeId
+WHERE sal.soldDate >= '2023-01-01'
+GROUP BY emp.employeeId, emp.firstName, emp.lastName
+HAVING count(*) > 5
