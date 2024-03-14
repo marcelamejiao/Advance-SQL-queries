@@ -58,3 +58,16 @@ ON sal.employeeId=emp.employeeId
 GROUP BY emp.employeeId, emp.firstName, emp.lastName
 ORDER BY CarsSoldPerEmployee DESC;
 
+
+-- 5. The least and most expensive cars sold by each employee this year(for this eg. current year is 2023)
+SELECT 
+  emp.employeeId, 
+  emp.firstName, 
+  emp.lastName, 
+  MIN(salesAmount) as CheapestCar, 
+  MAX(salesAmount) as MostExpensiveCar
+FROM sales as sal
+INNER JOIN employee as emp
+ON sal.employeeId = emp.employeeId
+WHERE sal.soldDate >= '2023-01-01'
+GROUP BY emp.employeeId, emp.firstName, emp.lastName
