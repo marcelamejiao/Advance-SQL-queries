@@ -160,6 +160,22 @@ WHERE inv.modelId IN (
 )
 
 
+-- 10. For each sales person , rank the car models they have sold the most
+-- For this query we need to use the rank() window function, the OVER clause and PARTITION BY subclause
+SELECT emp.firstName, emp.lastName, mod.model,
+      count(model) AS NumberSold,
+      rank() OVER (PARTITION BY sal.employeeId
+                  ORDER BY count(model) desc) AS Rank
+FROM sales sal
+INNER JOIN employee emp
+      ON sal.employeeId = emp.employeeId
+INNER JOIN inventory inv
+      ON inv.inventoryId = sal.inventoryId
+INNER JOIN model mod
+      ON mod.modelId = inv.modelId
+GROUP BY emp.firstName, emp.lastName, mod.model
+
+
 
 
 
