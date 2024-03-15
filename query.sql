@@ -91,7 +91,6 @@ HAVING count(*) > 5
 -- Summarise sales per year
 
 -- We are using the strftime() function that returns the date in a string that is specified in the first argument
-
 WITH cte AS (
 SELECT strftime('%Y', soldDate) AS soldYear, salesAmount
 FROM sales
@@ -103,8 +102,6 @@ ORDER BY soldYear
 
 
 -- 8. Create a report that shows the amount of sales per employee for each month in 2021
-
-
 SELECT emp.lastName, emp.firstName,
   SUM(CASE 
         WHEN strftime('%m', soldDate) = '01'
@@ -150,6 +147,17 @@ WHERE sal.soldDate
 GROUP BY emp.lastName, emp.firstName
 ORDER BY emp.lastName, emp.firstName
 
+
+-- 9. Find the sales of cars that are electric by using a Subquery
+SELECT sal.salesId, sal.salesAmount, inv.colour, inv.year
+FROM sales sal 
+INNER JOIN inventory inv
+      ON sal.inventoryId = inv.inventoryId
+WHERE inv.modelId IN (
+      SELECT modelId
+      FROM model
+      WHERE EngineType = 'Electric'
+)
 
 
 
