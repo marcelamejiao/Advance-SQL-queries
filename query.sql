@@ -85,3 +85,27 @@ ON sal.employeeId = emp.employeeId
 WHERE sal.soldDate >= '2023-01-01'
 GROUP BY emp.employeeId, emp.firstName, emp.lastName
 HAVING count(*) > 5
+
+-- 7. Common Table Expression CTE: allows us to break the queries into sections
+-- Create a report showing the total sales per year
+-- Summarise sales per year
+
+-- We are using the strftime() function that returns the date in a string that is specified in the first argument
+
+WITH cte AS (
+SELECT strftime('%Y', soldDate) AS soldYear, salesAmount
+FROM sales
+)
+SELECT soldYear, FORMAT('$%.2f', sum(salesAmount)) AS AnnualSales
+FROM cte
+GROUP BY soldYear
+ORDER BY soldYear
+
+
+
+
+
+
+
+
+
