@@ -175,7 +175,8 @@ INNER JOIN model mod
       ON mod.modelId = inv.modelId
 GROUP BY emp.firstName, emp.lastName, mod.model
 
--- 11. Generate a sales report showing the total sales per month and an annual total
+
+-- 11. Generate a sales report showing the total sales per month and an annual total(window function)
 with cte_sales as (
 SELECT strftime('%Y', soldDate) AS soldYear, 
   strftime('%m', soldDate) AS soldMonth,
@@ -190,6 +191,16 @@ SELECT soldYear, soldMonth, salesAmount,
 FROM cte_sales
 ORDER BY soldYear, soldMonth
 
+
+-- 12. Number of cars sold this month and last month(window function)
+-- LAG() function to access previous rows data as per defined offset value
+SELECT strftime('%Y-%m', soldDate) AS MonthSold,
+  COUNT(*) AS NumberCarsSold,
+  LAG (COUNT(*), 1, 0 ) OVER calMonth AS LastMonthCarsSold
+FROM sales
+GROUP BY strftime('%Y-%m', soldDate)
+WINDOW calMonth AS (ORDER BY strftime('%Y-%m', soldDate))
+ORDER BY strftime('%Y-%m', soldDate)
 
 
 
